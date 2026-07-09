@@ -19,6 +19,17 @@ public string passwordHash {get; set;} = string.Empty;
 [BsonElement("createdAt")]
 public DateTime CreatedAt {get; set;} = DateTime.UtcNow;
     }
-
-
+//request body for register and login
+public class AuthRequest
+    {
+        public string Username {get; set;} = string.Empty;
+        public string Password {get; set;} = string.Empty;
+    }
+    //response after success
+public class AuthResponse
+    {
+        public string Token {get; set;} = string.Empty;
+        public string UserId {get; set;} = string.Empty;
+        public string Username {get; set;} = string.Empty;
+    }
 }
