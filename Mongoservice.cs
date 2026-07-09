@@ -11,7 +11,26 @@ namespace GameServer.Services
         {
             var connectionString = config["MongoDB:ConnectionString"]
             ??throw new InvalidOperationException("MongoDB connection string not configured.");
-            
+
+            var databaseName = config["MongoDB:DatabaseName"] ?? "gameproject";
+
+            var client = new MongoClient(connectionString);
+            _db = client.GetDataBase(databaseName);
+
+            EnsureIndexes();
+        }
+        //Collection Accessors
+        public IMongoCollection<User> Users => _db.GetCollection<User>("users");
+        public IMongoCollection<saveGame> SaveGames => _db.GetCollection<SaveGames>("saves");
+
+        private void EnsureIndexes()
+        {
+            //unique index usernames
+            var usernameIndex = Builders<Users>.indexKeys.Ascending(u => u.Username);
+            Users.Indexes.CreateOne(new CreateIndexModel<User>(
+                usernameIndex,
+                new CreateIndexOptions { Unique = true}
+            ));
         }
     }
 }
