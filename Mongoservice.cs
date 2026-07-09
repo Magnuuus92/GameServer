@@ -31,6 +31,14 @@ namespace GameServer.Services
                 usernameIndex,
                 new CreateIndexOptions { Unique = true}
             ));
+            // compound index on userId + slot & ensure one doc per user per slot
+            var saveIndex = Builder<SaveGames>.indexKeys
+            .Ascending(s => s.UserId)
+            .Ascending(s => s.Slot);
+            SaveGames.Indexes.CreateOne(new CreateIndexModel<SaveGame>(
+                saveIndex,
+                new CreateIndexOptions { Unique = true}
+            ));
         }
     }
 }
