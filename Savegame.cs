@@ -26,7 +26,7 @@ namespace GameServer.Models
 
         //Display info stored separately so it can display list without deserializing full state.
         [BsonElement("day")]
-        public string Day {get; set;} = string.Empty;
+        public int Day {get; set;} 
 
         [BsonElement("level")]
         public int Level {get; set;}
@@ -35,5 +35,23 @@ namespace GameServer.Models
         public string CharacterName {get; set;} = string.Empty;
         [BsonElement("savedAt")]
         public DateTime SavedAt {get; set;} = DateTime.UtcNow;
+    }
+    //Sent from browsergame when saving
+    public class SaveRequest
+    {
+        public string StateJson {get; set;} = string.Empty;
+        public int Day {get; set;}
+        public int Level {get; set;}
+        public string CharacterName {get; set;} = string.Empty;
+    }
+    //sent back when listing slots
+    public class SlotInfo
+    {
+        public string Slot {get; set;} =string.Empty;
+        public int Day {get; set;}
+        public int Level {get; set;}
+        public string CharacterName {get; set;} =string.Empty;
+        public string SavedAt {get; set;} = string.Empty;
+        public bool HasData {get; set;}
     }
 }
