@@ -28,6 +28,17 @@ namespace GameServer.Services
                 new Claim(ClaimTypes.NameIdentifier, userId),
                 new Claim(ClaimTypes.Name, username),
             };
+            var token = new JwtSecurityToken(
+                claims: claims,
+                expires: DateTime.UtcNow.AddDays(_expiryDays),
+                signingCredentials: creds
+            );
+            return newJwtSecurityTokenHandler().WriteToken(token);
+        }
+        //extract user id from validated token
+public string? GetUserId(ClaimsPrincipal user)
+        {
+            return user.FindFirst(ClaimTypes.NameIdentifier)?.Value;
         }
     }
 }
