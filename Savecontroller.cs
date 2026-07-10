@@ -73,12 +73,52 @@ namespace GameServer.Controllers
 
             var update = Builders<SaveGame>.Update
             .Set(s => s.StateJson, request.StateJson)
-            .Set(s => s.StateJson, request.StateJson)
-            .Set(s => s.StateJson, request.StateJson)
-            .Set(s => s.StateJson, request.StateJson)
-            .Set(s => s.StateJson, request.StateJson)
-            .Set(s => s.StateJson, request.StateJson)
-            .Set(s => s.StateJson, request.StateJson)
+            .Set(s => s.Day, request.Day)
+            .Set(s => s.Level, request.Level)
+            .Set(s => s.CharacterName, request.CharacterName)
+            .Set(s => s.SavedAt, DateTime.UtcNow)
+            .SetOnInsert(s => s.UserId, userId)
+            .Set(s => s.Slot, slot);
+
+            await _mongo.SaveGames.UpdateOneAsync(
+                filter,
+                update,
+                new UpdateOptions { IsUpsert = true}
+            );
+            return Ok(new {message = $"Saved to {slot}"});
+        }
+        //GET api/saves/{slot} returns full json for a slot
+        [HttpGet("{slot}")]
+        public async Task<IActionResults> Load(string slot)
+        {
+            if(!ValidSlots.Contains(slot))
+            return BadRequest(new {errror = "Invalid slot name."});
+            
+            var userId = _jwt.GetUserId(User);
+            if(userId == null) return Unauthorized();
+
+            var save = await _mongo.SaveGames
+            .Find(s => s.UserId == userId && s.Slot == slot)
+            .FirstOrDefaultAsync();
+
+            if(save == null)
+            return NotFound(new {error = "No save found in this slot."});
+return Ok(new {stateJson = save.StateJson});
+        }
+        //DELETE api/saves/{slot}
+        [HttpDelete("{slot}")]
+        public async Task<IActionResult> Delete(string slot)
+        {
+            if(!ValidSlots.Contains(slot))
+            return BadRequest(new {error = "Invalid slot name."});
+
+            var userId = _jwt.GetUserId(User);
+            if(userId == null) return Unauthorized();
+
+            await _mongo.SaveGames.DeleteOneAsync(
+                s => s.UserId && s.Slot == slot
+            );
+            return Ok(new {message = $"{slot} deleted"});
         }
     }
 }
