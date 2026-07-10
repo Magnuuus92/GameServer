@@ -92,7 +92,7 @@ namespace GameServer.Controllers
         public async Task<IActionResults> Load(string slot)
         {
             if(!ValidSlots.Contains(slot))
-            return BadRequest(new {errror = "Invalid slot name."});
+            return BadRequest(new {error = "Invalid slot name."});
             
             var userId = _jwt.GetUserId(User);
             if(userId == null) return Unauthorized();
