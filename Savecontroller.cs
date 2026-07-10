@@ -4,6 +4,7 @@ using MongoDB.Driver;
 using GameServer.Models;
 using GameServer.Services;
 using System.Diagnostics.Tracing;
+using System.IO.Compression;
 
 namespace GameServer.Controllers
 {
@@ -63,6 +64,21 @@ namespace GameServer.Controllers
 
             if(string.IsNullOrWhiteSpace(request.StateJson))
             return BadRequest(new {error = "No savedata provided"});
+
+            //create or overwrite save for this slot
+            var filter = Builders<SaveGame>.Filter.And(
+                Builders<SaveGame>.Filter.Eq(s => s.UserId, userId),
+                Builders<SaveGame>.Filter.Eq(s => s.Slot, slot)
+            );
+
+            var update = Builders<SaveGame>.Update
+            .Set(s => s.StateJson, request.StateJson)
+            .Set(s => s.StateJson, request.StateJson)
+            .Set(s => s.StateJson, request.StateJson)
+            .Set(s => s.StateJson, request.StateJson)
+            .Set(s => s.StateJson, request.StateJson)
+            .Set(s => s.StateJson, request.StateJson)
+            .Set(s => s.StateJson, request.StateJson)
         }
     }
 }
