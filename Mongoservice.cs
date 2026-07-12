@@ -21,7 +21,7 @@ namespace GameServer.Services
         }
         //Collection Accessors
         public IMongoCollection<User> Users => _db.GetCollection<User>("users");
-        public IMongoCollection<saveGame> SaveGames => _db.GetCollection<SaveGames>("saves");
+        public IMongoCollection<SaveGame> SaveGames => _db.GetCollection<SaveGames>("saves");
 
         private void EnsureIndexes()
         {
