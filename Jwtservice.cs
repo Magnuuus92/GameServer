@@ -10,7 +10,7 @@ namespace GameServer.Services
         private readonly string _secret;
         private readonly int _expiryDays;
 
-        public JwtService(Iconfiguration config)
+        public JwtService(IConfiguration config)
         {
             _secret  = config["Jwt:Secret"]
             ?? throw new InvalidOperationException("JWT secret not configured.");

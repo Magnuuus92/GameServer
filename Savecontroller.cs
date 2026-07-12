@@ -89,7 +89,7 @@ namespace GameServer.Controllers
         }
         //GET api/saves/{slot} returns full json for a slot
         [HttpGet("{slot}")]
-        public async Task<IActionResults> Load(string slot)
+        public async Task<IActionResult> Load(string slot)
         {
             if(!ValidSlots.Contains(slot))
             return BadRequest(new {error = "Invalid slot name."});

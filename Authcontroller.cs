@@ -19,7 +19,7 @@ namespace GameServer.Controllers
             _jwt = jwt;
         }
         //Post api/auth/register
-        [httpPost("register")]
+        [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] AuthRequest request)
         {
             if(string.IsNullOrWhiteSpace(request.Username) ||
