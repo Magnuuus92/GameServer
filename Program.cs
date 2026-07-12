@@ -21,7 +21,7 @@ builder.Services.AddCors(options =>
     {
         policy
         .WithOrigins(allowedOrigins)
-        .AllowedAnyHeader()
+        .AllowAnyHeader()
         .AllowAnyMethod();
     });
 });
@@ -33,7 +33,7 @@ var jwtSecret = builder.Configuration["Jwt:Secret"]
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 .AddJwtBearer(options =>
 {
-    options.TokenValidationsParameters = new TokenValidationParameters
+    options.TokenValidationParameters = new TokenValidationParameters
     {
         ValidateIssuerSigningKey = true,
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSecret)),

@@ -26,13 +26,13 @@ namespace GameServer.Services
         private void EnsureIndexes()
         {
             //unique index usernames
-            var usernameIndex = Builders<Users>.indexKeys.Ascending(u => u.Username);
+            var usernameIndex = Builders<User>.indexKeys.Ascending(u => u.Username);
             Users.Indexes.CreateOne(new CreateIndexModel<User>(
                 usernameIndex,
                 new CreateIndexOptions { Unique = true}
             ));
             // compound index on userId + slot & ensure one doc per user per slot
-            var saveIndex = Builder<SaveGames>.indexKeys
+            var saveIndex = Builders<SaveGame>.IndexKeys
             .Ascending(s => s.UserId)
             .Ascending(s => s.Slot);
             SaveGames.Indexes.CreateOne(new CreateIndexModel<SaveGame>(
