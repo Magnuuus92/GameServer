@@ -38,7 +38,7 @@ namespace GameServer.Controllers
             //Builds response for all slots
             var slots = ValidSlots.Select(slot =>
             {
-                var save = saves.FirstOrDefaultAsync(s => s.Slot == slot);
+                var save = saves.FirstOrDefault(s => s.Slot == slot);
                 return new SlotInfo
                 {
                     Slot = slot,
@@ -78,7 +78,7 @@ namespace GameServer.Controllers
             .Set(s => s.CharacterName, request.CharacterName)
             .Set(s => s.SavedAt, DateTime.UtcNow)
             .SetOnInsert(s => s.UserId, userId)
-            .Set(s => s.Slot, slot);
+            .SetOnInsert(s => s.Slot, slot); // Unsure. set or setOnInsert here.
 
             await _mongo.SaveGames.UpdateOneAsync(
                 filter,
@@ -116,7 +116,7 @@ return Ok(new {stateJson = save.StateJson});
             if(userId == null) return Unauthorized();
 
             await _mongo.SaveGames.DeleteOneAsync(
-                s => s.UserId && s.Slot == slot
+                s => s.UserId == userId && s.Slot == slot
             );
             return Ok(new {message = $"{slot} deleted"});
         }
