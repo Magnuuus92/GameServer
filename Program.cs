@@ -2,6 +2,7 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using GameServer.Services;
+using System.Security.Cryptography;
 
 var builder = WebApplication.CreateBuilder(args);
 //SERVICES
@@ -35,5 +36,9 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     options.TokenValidationsParameters = new TokenValidationParameters
     {
         ValidateIssuerSigningKey = true,
-    }
-})
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSecret)),
+        ValidateIssuer= false,
+        ValidateAudience = false,
+        ClockSkew = TimeSpan.Zero, 
+    };
+});
