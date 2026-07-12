@@ -26,7 +26,7 @@ namespace GameServer.Services
         private void EnsureIndexes()
         {
             //unique index usernames
-            var usernameIndex = Builders<User>.indexKeys.Ascending(u => u.Username);
+            var usernameIndex = Builders<User>.IndexKeys.Ascending(u => u.Username);
             Users.Indexes.CreateOne(new CreateIndexModel<User>(
                 usernameIndex,
                 new CreateIndexOptions { Unique = true}

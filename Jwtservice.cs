@@ -33,7 +33,7 @@ namespace GameServer.Services
                 expires: DateTime.UtcNow.AddDays(_expiryDays),
                 signingCredentials: creds
             );
-            return newJwtSecurityTokenHandler().WriteToken(token);
+            return new JwtSecurityTokenHandler().WriteToken(token);
         }
         //extract user id from validated token
 public string? GetUserId(ClaimsPrincipal user)
