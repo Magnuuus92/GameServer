@@ -42,7 +42,7 @@ namespace GameServer.Controllers
                 return new SlotInfo
                 {
                     Slot = slot,
-                    HasData = save = !null,
+                    HasData = save != null,
                     Day = save?.Day ?? 0,
                     Level = save?.Level ?? 0,
                     CharacterName = save?.CharacterName ?? "",

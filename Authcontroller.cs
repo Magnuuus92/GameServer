@@ -61,7 +61,7 @@ namespace GameServer.Controllers
         {
             if(string.IsNullOrWhiteSpace(request.Username) ||
             string.IsNullOrWhiteSpace(request.Password))
-            return badRequest( new {error = "Username and password required."});
+            return BadRequest( new {error = "Username and password required."});
 
             var user = await _mongo.Users
             .Find(u => u.Username.ToLower() == request.Username.ToLower())
