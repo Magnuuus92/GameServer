@@ -42,8 +42,8 @@ namespace GameServer.Controllers
             //hash passw with bcrypt
             var user = new User
             {
-                Username= request.Username,
-                PasswordHash= BCrypt.Net.BCrypt.HashPassword(request.Password),
+                Username = request.Username,
+                PasswordHash = BCrypt.Net.BCrypt.HashPassword(request.Password),
             };
             await _mongo.Users.InsertOneAsync(user);
 

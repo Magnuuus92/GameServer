@@ -29,10 +29,10 @@ namespace GameServer.Controllers
         public async Task<IActionResult> GetSlots()
         {
             var userId = _jwt.GetUserId(User);
-            if (userId == null) return UnAuthorized();
+            if (userId == null) return Unauthorized();
 
             var saves = await _mongo.SaveGames
-            .Find(s => s.UserId == UserId)
+            .Find(s => s.UserId == userId)
             .ToListAsync();
 
             //Builds response for all slots
