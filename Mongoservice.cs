@@ -15,13 +15,13 @@ namespace GameServer.Services
             var databaseName = config["MongoDB:DatabaseName"] ?? "gameproject";
 
             var client = new MongoClient(connectionString);
-            _db = client.GetDataBase(databaseName);
+            _db = client.GetDatabase(databaseName);
 
             EnsureIndexes();
         }
         //Collection Accessors
         public IMongoCollection<User> Users => _db.GetCollection<User>("users");
-        public IMongoCollection<SaveGame> SaveGames => _db.GetCollection<SaveGames>("saves");
+        public IMongoCollection<SaveGame> SaveGames => _db.GetCollection<SaveGame>("saves");
 
         private void EnsureIndexes()
         {

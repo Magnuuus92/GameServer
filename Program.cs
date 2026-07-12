@@ -6,7 +6,7 @@ using System.Security.Cryptography;
 
 var builder = WebApplication.CreateBuilder(args);
 //SERVICES
-builder.Services.AddSingleton<mongoService>();
+builder.Services.AddSingleton<MongoService>();
 
 builder.Services.AddSingleton<JwtService>();
 
