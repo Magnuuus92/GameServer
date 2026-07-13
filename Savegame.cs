@@ -13,7 +13,7 @@ namespace GameServer.Models
 
         //which user owns save
         [BsonElement("userId")]
-        public string userId {get; set;} = string.Empty;
+        public string UserId {get; set;} = string.Empty;
 
         // slot1, 2, 3 & autoSave
         [BsonElement("slot")]

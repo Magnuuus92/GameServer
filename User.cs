@@ -14,7 +14,7 @@ namespace GameServer.Models
 
         //Hash - no plaintxt pw stored
 [BsonElement("passwordHash")]
-public string passwordHash {get; set;} = string.Empty;
+public string PasswordHash {get; set;} = string.Empty;
 //Timestamp
 [BsonElement("createdAt")]
 public DateTime CreatedAt {get; set;} = DateTime.UtcNow;
