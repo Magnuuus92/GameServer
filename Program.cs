@@ -1,8 +1,10 @@
+
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using GameServer.Services;
 using System.Security.Cryptography;
+DotNetEnv.Env.Load(); //loads enviroment (.env)
 
 var builder = WebApplication.CreateBuilder(args);
 //SERVICES
