@@ -4,9 +4,15 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using GameServer.Services;
 using System.Security.Cryptography;
-DotNetEnv.Env.Load(); //loads enviroment (.env)
+DotNetEnv.Env.Load(); //loads environment (.env)
+var jwtSecret = Environment.GetEnvironmentVariable("JWT_SECRET")
+?? throw new InvalidOperationException("JWT_SECRET not found in env.");
+var mongoConn = Environment.GetEnvironmentVariable("MONGODB_CONNECTION")
+?? throw new InvalidOperationException("MONGODB_CONNECTION not found in env.");
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Configuration["Jwt:Secret"] = jwtSecret;
+builder.Configuration["MongoDB:ConnectionString"] = mongoConn;
 //SERVICES
 builder.Services.AddSingleton<MongoService>();
 
@@ -29,8 +35,8 @@ builder.Services.AddCors(options =>
 });
 
 //JWT AUTH
-var jwtSecret = builder.Configuration["Jwt:Secret"]
-?? throw new InvalidOperationException("JWT secret not configured.");
+
+
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 .AddJwtBearer(options =>
